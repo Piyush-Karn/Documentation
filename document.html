@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VisionX - Smart Object Detection for Safer Space Missions</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #0d6efd;
+      --secondary-color: #6c757d;
+      --light-bg: #f8f9fa;
+      --dark-text: #212529;
+      --sidebar-width: 280px;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--dark-text);
+      background-color: #fafafa;
+    }
+    
+    .navbar-brand {
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    
+    .bg-light-subtle {
+      background-color: var(--light-bg);
+    }
+    
+    .sidebar {
+      position: sticky;
+      top: 70px;
+      height: calc(100vh - 70px);
+      overflow-y: auto;
+      padding: 1rem;
+      border-right: 1px solid rgba(0,0,0,0.1);
+    }
+    
+    .nav-link {
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      color: var(--dark-text);
+      transition: all 0.2s ease;
+    }
+    
+    .nav-link:hover {
+      background-color: rgba(13, 110, 253, 0.1);
+      color: var(--primary-color);
+    }
+    
+    .nav-link.active {
+      background-color: var(--primary-color);
+      color: white;
+    }
+    
+    .section {
+      padding-top: 80px;
+      margin-bottom: 2rem;
+      scroll-margin-top: 80px;
+    }
+    
+    .section-title {
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+      position: relative;
+      display: inline-block;
+      padding-bottom: 8px;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background-color: var(--primary-color);
+    }
+    
+    .card {
+      border: none;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
+    
+    .alert {
+      border-left: 4px solid var(--primary-color);
+    }
+    
+    .figure img {
+      border-radius: 6px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+    
+    code {
+      padding: 0.2rem 0.4rem;
+      background-color: #f5f5f5;
+      border-radius: 4px;
+      color: #d63384;
+    }
+    
+    pre {
+      background-color: #f8f9fa;
+      border-radius: 6px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .badge-highlight {
+      background-color: rgba(13, 110, 253, 0.15);
+      color: var(--primary-color);
+      font-weight: 500;
+      padding: 0.35rem 0.65rem;
+      border-radius: 4px;
+    }
+    
+    .metric-card {
+      padding: 1.5rem;
+      border-radius: 8px;
+      text-align: center;
+    }
+    
+    .metric-value {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--primary-color);
+    }
+    
+    .metric-label {
+      font-size: 0.85rem;
+      color: var(--secondary-color);
+      font-weight: 500;
+    }
+    
+    .carousel-item img {
+      max-height: 400px;
+      width: auto;
+      margin: 0 auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .carousel-caption {
+      background-color: rgba(0,0,0,0.7);
+      border-radius: 6px;
+      padding: 0.75rem;
+      bottom: 20px;
+      max-width: 80%;
+      margin: 0 auto;
+      left: 10%;
+      right: 10%;
+    }
+    
+    .flowchart {
+      display: flex;
+      justify-content: space-between;
+      overflow-x: auto;
+      padding: 1rem 0;
+      margin-bottom: 2rem;
+    }
+    
+    .flowchart-step {
+      flex: 1;
+      min-width: 120px;
+      text-align: center;
+      position: relative;
+      padding: 1rem 0.5rem;
+    }
+    
+    .flowchart-step::after {
+      content: '→';
+      position: absolute;
+      right: -10px;
+      top: 50%;
+      font-size: 1.5rem;
+      color: var(--secondary-color);
+      transform: translateY(-50%);
+      z-index: 1;
+    }
+    
+    .flowchart-step:last-child::after {
+      display: none;
+    }
+    
+    .flowchart-icon {
+      width: 60px;
+      height: 60px;
+      line-height: 60px;
+      background-color: var(--light-bg);
+      border-radius: 50%;
+      margin: 0 auto 0.5rem;
+      color: var(--primary-color);
+      font-size: 1.5rem;
+    }
+    
+    .back-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--primary-color);
+      color: white;
+      text-align: center;
+      line-height: 40px;
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .back-to-top.show {
+      opacity: 1;
+    }
+
+    @media (max-width: 991.98px) {
+      .sidebar {
+        position: static;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+      }
+    }
+
+    .github-btn {
+      background-color: #24292e;
+      color: white;
+    }
+    
+    .github-btn:hover {
+      background-color: #1a1e22;
+      color: white;
+    }
+    
+    .pdf-btn {
+      background-color: #dc3545;
+      color: white;
+    }
+    
+    .pdf-btn:hover {
+      background-color: #c82333;
+      color: white;
+    }
+    
+    footer {
+      background-color: #343a40;
+      color: white;
+    }
+  </style>
+</head>
+<body data-bs-spy="scroll" data-bs-target="#navbar-example" data-bs-offset="80">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        VisionX <span class="text-primary">|</span> <small class="text-muted">Space Safety</small>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#intro">Introduction</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#overview">System Overview</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#dataset">Dataset</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#training">Model Training</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#performance">Performance</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#samples">Sample Outputs</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#challenges">Challenges</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#conclusion">Conclusion</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-lg-3 col-xl-2 d-none d-lg-block">
+        <div class="sidebar">
+          <h5 class="mb-3">Contents</h5>
+          <nav id="navbar-example" class="navbar navbar-light">
+            <nav class="nav nav-pills flex-column">
+              <a class="nav-link" href="#intro">Introduction</a>
+              <a class="nav-link" href="#overview">System Overview</a>
+              <a class="nav-link" href="#dataset">Dataset & Environment</a>
+              <a class="nav-link" href="#training">Model Training</a>
+              <a class="nav-link" href="#performance">Performance Metrics</a>
+              <a class="nav-link" href="#samples">Sample Outputs</a>
+              <a class="nav-link" href="#challenges">Challenges & Solutions</a>
+              <a class="nav-link" href="#conclusion">Conclusion & Future Work</a>
+              <a class="nav-link" href="#download">Downloads</a>
+            </nav>
+          </nav>
+        </div>
+      </div>
+      
+      <!-- Main Content -->
+      <div class="col-lg-9 col-xl-10">
+        <div class="container py-5">
+          <!-- Introduction -->
+          <section id="intro" class="section">
+            <h2 class="section-title">VisionX — Smart Object Detection for Safer Space Missions</h2>
+            <p class="lead">By: Team BlackOps</p>
+            
+            <div class="card mt-4 mb-4">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col-md-3 text-center">
+                    <img src="https://media-hosting.imagekit.io/ece1f7eb929d48f0/logo.png?Expires=1841204821&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=S50vCBWXdYIxaO5YW8wFoct6EIwAqGySFH429n~Apc67CzmwW5Z7Dtf7f7TkjiEofpcJyqBskYRiJi-S01t8ohAVnD8FjnnKrW~LOmqLMA7kTC1LXA1kfFEsWx-sXvjWkpqkglr6h-GBbYjTlF7LdV7qk1IjMiqdbkL0gGFtKbhJzTQeiVZZQhri6KDAVBty1M1y6Tfe7Wihdh5VvOS5bx6f7uTlsbHFDUJ3QUVlYRn5A4ugpUr8FLpFq1IifYE~tFjsXP-e9s4QDsvBs4vwiaYet8JlVRjtezg2HHKgEpFCTdnnPeRyQ3P9LJ~SoRwcbkh5Xgfzcv6NfGXMisHOYQ__" alt="VisionX Logo" class="img-fluid" style="max-width: 150px;">
+                  </div>
+                  <div class="col-md-9">
+                    <h5 class="card-title">Project Overview</h5>
+                    <p class="card-text">
+                      <strong>VisionX is a real-time object detection system built for identifying safety-critical items aboard space stations using synthetic data.</strong>
+                    </p>
+                    <div class="alert alert-light">
+                      <i class="fas fa-lightbulb text-warning me-2"></i>
+                      <strong>Problem Statement:</strong> In the high-stakes environment of space missions, rapid identification of safety equipment is critical during emergencies. Traditional visual searches are time-consuming and prone to human error, especially under stress.
+                    </div>
+                    <div class="mt-3">
+                      <span class="badge bg-primary me-2">Real-time Detection</span>
+                      <span class="badge bg-success me-2">Space Safety</span>
+                      <span class="badge bg-info me-2">YOLOv8</span>
+                      <span class="badge bg-secondary">Synthetic Data</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-12">
+                  <h5>Objective</h5>
+                  <p>
+                    The VisionX system aims to provide astronauts with an automated visual detection capability for three critical safety items:
+                  </p>
+                  <div class="row">
+                    <div class="col-md-4 mb-3">
+                      <div class="card h-100">
+                        <div class="card-body text-center">
+                          <i class="fas fa-toolbox fa-3x text-primary mb-3"></i>
+                          <h6>Emergency Toolbox</h6>
+                          <p class="small">Contains essential tools for quick repairs and system maintenance</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                      <div class="card h-100">
+                        <div class="card-body text-center">
+                          <i class="fas fa-fire-extinguisher fa-3x text-danger mb-3"></i>
+                          <h6>Fire Extinguisher</h6>
+                          <p class="small">Critical for containing fire emergencies in the oxygen-rich environment</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                      <div class="card h-100">
+                        <div class="card-body text-center">
+                          <i class="fas fa-gas-pump fa-3x text-info mb-3"></i>
+                          <h6>Oxygen Tank</h6>
+                          <p class="small">Life-support equipment for emergency breathing situations</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            
+          
+          <!-- System Overview -->
+          <section id="overview" class="section">
+            <h2 class="section-title">System Overview</h2>
+            <div class="card mb-4">
+              <div class="card-body">
+                <h5 class="card-title">Processing Pipeline</h5>
+                <div class="flowchart">
+                  <div class="flowchart-step">
+                    <div class="flowchart-icon">
+                      <i class="fas fa-database"></i>
+                    </div>
+                    <h6>Dataset</h6>
+                    <small>Synthetic Images</small>
+                  </div>
+                  <div class="flowchart-step">
+                    <div class="flowchart-icon">
+                      <i class="fas fa-crop-alt"></i>
+                    </div>
+                    <h6>Preprocessing</h6>
+                    <small>Augmentation</small>
+                  </div>
+                  <div class="flowchart-step">
+                    <div class="flowchart-icon">
+                      <i class="fas fa-brain"></i>
+                    </div>
+                    <h6>YOLOv8</h6>
+                    <small>Model Architecture</small>
+                  </div>
+                  <div class="flowchart-step">
+                    <div class="flowchart-icon">
+                      <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <h6>Training</h6>
+                    <small>5 Epochs</small>
+                  </div>
+                  <div class="flowchart-step">
+                    <div class="flowchart-icon">
+                      <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h6>Evaluation</h6>
+                    <small>mAP Metrics</small>
+                  </div>
+                  <div class="flowchart-step">
+                    <div class="flowchart-icon">
+                      <i class="fas fa-eye"></i>
+                    </div>
+                    <h6>Prediction</h6>
+                    <small>Real-time Detection</small>
+                  </div>
+                </div>
+                
+                <h5 class="mt-4">Technology Stack</h5>
+                <div class="row mt-3">
+                  <div class="col-md-6 col-lg-3 mb-3">
+                    <div class="card h-100">
+                      <div class="card-body">
+                        <h6 class="card-title">
+                          <i class="fas fa-eye text-primary me-2"></i>YOLOv8
+                        </h6>
+                        <p class="card-text small">State-of-the-art object detection model optimized for speed and accuracy</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-3 mb-3">
+                    <div class="card h-100">
+                      <div class="card-body">
+                        <h6 class="card-title">
+                          <i class="fas fa-cube text-success me-2"></i>Falcon Digital Twin
+                        </h6>
+                        <p class="card-text small">Synthetic environment for space station interior simulation</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-3 mb-3">
+                    <div class="card h-100">
+                      <div class="card-body">
+                        <h6 class="card-title">
+                          <i class="fab fa-python text-info me-2"></i>Python 3.10
+                        </h6>
+                        <p class="card-text small">Core programming language with data science libraries</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-lg-3 mb-3">
+                    <div class="card h-100">
+                      <div class="card-body">
+                        <h6 class="card-title">
+                          <i class="fas fa-camera text-danger me-2"></i>OpenCV
+                        </h6>
+                        <p class="card-text small">Computer vision library for image processing and visualization</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          
+          <!-- Dataset & Environment -->
+          <section id="dataset" class="section">
+            <h2 class="section-title">Dataset & Environment</h2>
+            <div class="row">
+              <div class="col-lg-7 mb-4">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h5 class="card-title">Synthetic Dataset Structure</h5>
+                    <p>
+                      Our dataset consists of synthetic images generated using the Falcon Digital Twin environment, which accurately simulates the International Space Station's interior. All images are annotated in YOLO format.
+                    </p>
+                    <div class="table-responsive">
+                      <table class="table table-bordered">
+                        <thead class="table-light">
+                          <tr>
+                            <th>Class</th>
+                            <th>Train</th>
+                            <th>Validation</th>
+                            <th>Test</th>
+                            <th>Total</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Toolbox</td>
+                            <td>450</td>
+                            <td>100</td>
+                            <td>50</td>
+                            <td>600</td>
+                          </tr>
+                          <tr>
+                            <td>Fire Extinguisher</td>
+                            <td>650</td>
+                            <td>150</td>
+                            <td>75</td>
+                            <td>875</td>
+                          </tr>
+                          <tr>
+                            <td>Oxygen Tank</td>
+                            <td>500</td>
+                            <td>120</td>
+                            <td>60</td>
+                            <td>680</td>
+                          </tr>
+                          <tr class="table-light">
+                            <td><strong>Total</strong></td>
+                            <td><strong>1600</strong></td>
+                            <td><strong>370</strong></td>
+                            <td><strong>185</strong></td>
+                            <td><strong>2155</strong></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-lg-5 mb-4">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h5 class="card-title">Environment Setup</h5>
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">
+                        <i class="fab fa-python text-primary me-2"></i>
+                        <strong>Python 3.10</strong>
+                        <p class="small mt-1 mb-0">Core programming language</p>
+                      </li>
+                      <li class="list-group-item">
+                        <i class="fas fa-box text-success me-2"></i>
+                        <strong>Anaconda Environment</strong>
+                        <p class="small mt-1 mb-0">For dependency management</p>
+                      </li>
+                      <li class="list-group-item">
+                        <i class="fas fa-terminal text-dark me-2"></i>
+                        <strong>Libraries</strong>
+                        <p class="small mt-1 mb-0">
+                          <code>ultralytics==8.0.20</code>
+                          <code>opencv-python==4.7.0</code>
+                          <code>numpy==1.24.3</code>
+                          <code>torch==2.0.1</code>
+                        </p>
+                      </li>
+                      <li class="list-group-item">
+                        <i class="fas fa-microchip text-danger me-2"></i>
+                        <strong>Hardware</strong>
+                        <p class="small mt-1 mb-0">Trained on NVIDIA A100 GPU with CUDA 11.7</p>
+                      </li>
+                    </ul>
+                    
+                    <div class="alert alert-info mt-3 small">
+                      <i class="fas fa-info-circle me-2"></i>
+                      The synthetic data generation setup allows for rapid expansion of the dataset with varied lighting conditions, occlusions, and camera angles.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          
+          <!-- Model Training -->
+          <section id="training" class="section">
+            <h2 class="section-title">Model Training</h2>
+            
+            <div class="row">
+              <div class="col-lg-8 mb-4">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h5 class="card-title">Training Configuration</h5>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <ul class="list-group list-group-flush">
+                          <li class="list-group-item">
+                            <div class="d-flex justify-content-between">
+                              <span><i class="fas fa-layer-group text-primary me-2"></i> Model</span>
+                              <span class="badge-highlight">YOLOv8s</span>
+                            </div>
+                          </li>
+                          <li class="list-group-item">
+                            <div class="d-flex justify-content-between">
+                              <span><i class="fas fa-wrench text-primary me-2"></i> Optimizer</span>
+                              <span class="badge-highlight">AdamW</span>
+                            </div>
+                          </li>
+                          <li class="list-group-item">
+                            <div class="d-flex justify-content-between">
+                              <span><i class="fas fa-tachometer-alt text-primary me-2"></i> Initial LR</span>
+                              <span class="badge-highlight">0.001</span>
+                            </div>
+                          </li>
+                          <li class="list-group-item">
+                            <div class="d-flex justify-content-between">
+                              <span><i class="fas fa-project-diagram text-primary me-2"></i> LRF</span>
+                              <span class="badge-highlight">0.01</span>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="col-md-6">
+                        <ul class="list-group list-group-flush">
+                          <li class="list-group-item">
+                            <div class="d-flex justify-content-between">
+                              <span><i class="fas fa-history text-primary me-2"></i> Epochs</span>
+                              <span class="badge-highlight">5</span>
+                            </div>
+                          </li>
+                          <li class="list-group-item">
+                            <div class="d-flex justify-content-between">
+                              <span><i class="fas fa-crop text-primary me-2"></i> Mosaic</span>
+                              <span class="badge-highlight">0.5</span>
+                            </div>
+                          </li>
+                          <li class="list-group-item">
+                            <div class="d-flex justify-content-between">
+                              <span><i class="fas fa-arrows-alt text-primary me-2"></i> Momentum</span>
+                              <span class="badge-highlight">0.2</span>
+                            </div>
+                          </li>
+                          <li class="list-group-item">
+                            <div class="d-flex justify-content-between">
+                              <span><i class="fas fa-compress-arrows-alt text-primary me-2"></i> Image Size</span>
+                              <span class="badge-highlight">640×640</span>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    
+                    <h6 class="mt-4">Training Command</h6>
+                    <pre class="language-python"><code>!python -m ultralytics.yolo.v8.detect.train \
+    model=yolov8s.pt \
+    data=dataset.yaml \
+    epochs=5 \
+    imgsz=640 \
+    batch=16 \
+    name=visionx_model \
+    patience=2 \
+    mosaic=0.5 \
+    lr0=0.001 \
+    lrf=0.01 \
+    momentum=0.2 \
+    warmup_epochs=1 \
+    val=True</code></pre>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-lg-4 mb-4">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h5 class="card-title">Key Optimizations</h5>
+                    <div class="alert alert-light border-left-primary mb-3">
+                      <h6><i class="fas fa-lightbulb text-warning me-2"></i>Mosaic Augmentation</h6>
+                      <p class="small mb-0">
+                        Set to 0.5 to balance between regular and mosaic-augmented images, improving detection of partially occluded objects.
+                      </p>
+                    </div>
+                    
+                    <div class="alert alert-light border-left-primary mb-3">
+                      <h6><i class="fas fa-lightbulb text-warning me-2"></i>Lower Momentum</h6>
+                      <p class="small mb-0">
+                        Reduced from default 0.937 to 0.2 to allow quicker adaptation to the synthetic dataset's unique characteristics.
+                      </p>
+                    </div>
+                    
+                    <div class="alert alert-light border-left-primary mb-3">
+                      <h6><i class="fas fa-lightbulb text-warning me-2"></i>Early Stopping</h6>
+                      <p class="small mb-0">
+                        Patience set to 2 epochs to prevent overfitting on the synthetic dataset.
+                      </p>
+                    </div>
+                    
+                    <div class="alert alert-light border-left-primary">
+                      <h6><i class="fas fa-lightbulb text-warning me-2"></i>Warm-up Strategy</h6>
+                      <p class="small mb-0">
+                        One warm-up epoch to stabilize gradients before main training phase.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          
+          <!-- Performance Metrics -->
+          <section id="performance" class="section">
+            <h2 class="section-title">Performance Metrics</h2>
+            
+            <div class="row">
+              <div class="col-lg-8 mb-4">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Key Performance Indicators</h5>
+                    <img src="https://media-hosting.imagekit.io/ac0166d2105a44de/results.png?Expires=1841205282&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=Z9kSrfhxPewIHSoi1bkDSD-g1Um9kqWxH~GjEhoFwzTFF3ExKLEsdyxupkJTMwK7eu7mrB1OcfqEPcIOw46IBTYTtF03rS1~Ee~uoM6QXWYc8j3cOt8Y7Pm-m5BgRjrYz4Iam1GDhuk8iMBmsgmeNGIa35UBXsbFybS66dzUfdA9k5ov8p5dF2VDsHQ36De7yZQ10nJg2gO6rmG~RLW9wqKKPU62MNpqLnuvklpvK8-deSnIahwauYx3Q~Crbyv9us~avwlfsIlKobo67aC~fdpxQl7A~SNxVFtDmWZO4ry9bXg40aeENKVpdwvHAYEiiddBfwXdmO7z0ZgZKm1eKQ__" alt="Performance Metrics Chart" class="img-fluid">
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-lg-4 mb-4">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h5 class="card-title">Performance Breakdown</h5>
+                    <p class="small">
+                      The model achieves excellent detection performance across all three safety-critical classes. The mAP@0.5 metric at 93.7% indicates high overall accuracy.
+                    </p>
+                    
+                    <div class="mt-4">
+                      <div class="mb-3">
+                        <h6>Fire Extinguisher</h6>
+                        <div class="progress">
+                          <div class="progress-bar bg-danger" role="progressbar" style="width: 96%;" aria-valuenow="96" aria-valuemin="0" aria-valuemax="100">96%</div>
+                        </div>
+                        <div class="small text-muted mt-1">Precision: 0.96 | Recall: 0.97</div>
+                      </div>
+                      
+                      <div class="mb-3">
+                        <h6>Toolbox</h6>
+                        <div class="progress">
+                          <div class="progress-bar bg-primary" role="progressbar" style="width: 92%;" aria-valuenow="92" aria-valuemin="0" aria-valuemax="100">92%</div>
+                        </div>
+                        <div class="small text-muted mt-1">Precision: 0.92 | Recall: 0.93</div>
+                      </div>
+                      
+                      <div class="mb-3">
+                        <h6>Oxygen Tank</h6>
+                        <div class="progress">
+                          <div class="progress-bar bg-info" role="progressbar" style="width: 93%;" aria-valuenow="93" aria-valuemin="0" aria-valuemax="100">93%</div>
+                        </div>
+                        <div class="small text-muted mt-1">Precision: 0.93 | Recall: 0.94</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-lg-6 mb-4">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h5 class="card-title">Confusion Matrix</h5>
+                    <div id="confusionMatrix" class="text-center my-3">
+                      <img src="https://media-hosting.imagekit.io/1e4a276c01a049e0/confusion_matrix.png?Expires=1841205482&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=BNfA87Jf41hWgpbDgT2cm3flN8M~RB8zw2zk8L-F1VIl3M79AzOHBli05xUjkK3F1Xn-IaF-uZaXRGvjgnLCswpCAITLLtrClVNSK4ufx3JNCtJD87uoq40y9LJ9CCRGKruCa0AOGhV3KxdrfHbS0EcrXw38a571MJsxaO9aYN2zJs8c6fMR7Km06Hg6D1TqlJrq0tpXFFzqrNtYuLTXyTw5qP4yPBWMjsH1Of6TvGJRQx~P1PqU5aMQJVPnK2vOluQilDcZ5Jb1Cx23C0ORLJpq3PAUKQVNgpoVVjksQQIZkNPPw~q5Bx56UluGL3spg6DhGAt3aZj9kHApv9cEmA__" alt="Confusion Matrix" class="img-fluid">
+                    </div>
+                    <p class="small">
+                      The confusion matrix shows minimal confusion between classes. Most false positives occur between the toolbox and other objects with similar rectangular shapes.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-lg-6 mb-4">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h5 class="card-title">Inference Speed</h5>
+                    <div class="row text-center my-4">
+                      <div class="col-md-4">
+                        <div class="metric-card">
+                          <div class="metric-value">24 ms</div>
+                          <div class="metric-label">Average Inference Time</div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="metric-card">
+                          <div class="metric-value">41 FPS</div>
+                          <div class="metric-label">Frames Per Second</div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="metric-card">
+                          <div class="metric-value">19 MB</div>
+                          <div class="metric-label">Model Size</div>
+                        </div>
+                      </div>
+                    </div>
+                    <p class="small">
+                      The model achieves real-time performance on standard hardware, making it suitable for deployment on space station systems with limited computational resources.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          
+          <!-- Sample Outputs -->
+          <section id="samples" class="section">
+            <h2 class="section-title">Sample Outputs</h2>
+            
+            <div class="card mb-4">
+              <div class="card-body">
+                <h5 class="card-title">Detection Examples</h5>
+                <div id="sampleCarousel" class="carousel slide" data-bs-ride="carousel">
+                  <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#sampleCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#sampleCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#sampleCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                  </div>
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <img src="https://media-hosting.imagekit.io/53972640162e4f61/2000000064.png?Expires=1841205878&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=CXReFK8Qhtlti-JWMVW9RxsJrqXd8F1-BmVmF1MaQW6BPqB1kxeh7XL6PgFVoV8fjiMrm5F390S84c78EJL32qQ1yDcYQcRywT87SUM3gExvkvOkEmSgjgSJjhJDWWUR-1diTC6ZYcusdp-HK43aWU8xbUpQgxZUBe5gUqDzZGZFMOZG0q0-7LjwFrH3tsjLRKo0j1RbSH3JfZn6atsiW0XjKJGtEKTOEQknc~~AjzgDStR6TnyYGe2iYUGHvcuitG86UurHb7dJYkudGg91RJuu2c0LHTRpkp9SDsJgleG~gCtnShKmVwoAcyOHi0aakuvnfEVyt4bLPzXIvOl8rA__" class="d-block w-100" alt="Fire Extinguisher Detection">
+                      <div class="carousel-caption d-none d-md-block">
+                        <h5>Fire Extinguisher Detection</h5>
+                        <p>High confidence detection under varied lighting conditions</p>
+                      </div>
+                    </div>
+                    <div class="carousel-item">
+                      <img src="https://media-hosting.imagekit.io/d459b0eb7dd3485e/2000000055.png?Expires=1841206048&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=Tyq1EGHE8KZEnj1qU0WejD5cy8nrYvdH9eLjumAoJBY3Ddx2~JaX8wCxhS0XAJk-zTtZyYQT3z0O5h6ANp0z7Uwj44L-vWifwYagNyy900yV2Mz31KypQz-bvC8MAUJNK52wv7m1awzRveOaHZ-p6dsHKQ~0piEuBqYJmmLTRzrRfeaDfmgq1JJ2Ai2oDrei8R7HaRVfBjEmMTvczYnDhOy0mCWA4~IRdSQDQdftIxMh3xov55pk4m7boCAd5McUCFdu9G292QXBxNHmazQt0fCclIX3MUNjUe0o9GGKiIR9j6Cf10aPmlROKV9dW9a7vl5-hmyep9UOj7vhE4Mz9w__" class="d-block w-100" alt="Toolbox Detection">
+                      <div class="carousel-caption d-none d-md-block">
+                        <h5>Toolbox Detection</h5>
+                        <p>Accurate detection even with partial occlusion</p>
+                      </div>
+                    </div>
+                    <div class="carousel-item">
+                      <img src="https://media-hosting.imagekit.io/cb16e4e8059e4b42/1000000053.png?Expires=1841206208&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=NCML2Na~29ODP46GPhue7s4XlxUDAD-NiisxIW~diCmUkw6pNna8QaydYy5bFErW~K6aKZ3GvyGoDjY3p1iMhmTmYdhIM1sxIACPy~~OoWa1wMpUhrETWpwg8s1nlnqhiNQd5ZaQKqpjWbr6C33bu5vWneOScFwKUmbNYd8dDLVTQyln0AzvDprhzUcl4zx2EbFSQ7QtiuWiVhzZfkzkt7kmjs01CvZalhWtUQpia1XAscBxSM7zlCZDzjls6tR9xh0ATsp1NZe9DW0fa~KZ8av8C-NgLxldV5V06M7mqUuYyyX0MJq02oxNI5Fl2x6ZRCGeeOA4zakNEW18SwVzZw__" class="d-block w-100" alt="Oxygen Tank Detection">
+                      <div class="carousel-caption d-none d-md-block">
+                        <h5>Oxygen Tank Detection</h5>
+                        <p>Reliable detection from various viewing angles</p>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="carousel-control-prev" type="button" data-bs-target="#sampleCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#sampleCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+          
+          <!-- Challenges & Solutions -->
+          <section id="challenges" class="section">
+            <h2 class="section-title">Challenges & Solutions</h2>
+            
+            <div class="row">
+              <div class="col-lg-6 mb-4">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h5 class="card-title">Technical Challenges</h5>
+                    <div class="accordion" id="challengesAccordion">
+                      <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Synthetic-to-Real Domain Gap
+                          </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#challengesAccordion">
+                          <div class="accordion-body">
+                            <p class="small">The model trained on synthetic data may not perform optimally on real-world images due to the domain gap.</p>
+                            <p class="small"><strong>Solution:</strong> Implemented sophisticated domain randomization techniques in the synthetic data generation pipeline, varying lighting conditions, textures, and camera parameters.</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Limited Computational Resources
+                          </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#challengesAccordion">
+                          <div class="accordion-body">
+                            <p class="small">Space hardware has strict limitations on computational power and memory.</p>
+                            <p class="small"><strong>Solution:</strong> Optimized the YOLOv8s model through pruning and quantization, reducing the model size by 32% while maintaining accuracy above 90%.</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingThree">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            Varying Lighting Conditions
+                          </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#challengesAccordion">
+                          <div class="accordion-body">
+                            <p class="small">Space station lighting can vary dramatically, from bright to emergency lighting scenarios.</p>
+                            <p class="small"><strong>Solution:</strong> Generated synthetic data with extreme lighting variations and implemented adaptive histogram equalization in the preprocessing pipeline.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-lg-6 mb-4">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h5 class="card-title">Implementation Challenges</h5>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead class="table-light">
+                          <tr>
+                            <th>Challenge</th>
+                            <th>Impact</th>
+                            <th>Solution</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Class Imbalance</td>
+                            <td>Bias toward majority class (Fire Extinguisher)</td>
+                            <td>Weighted loss function + focal loss</td>
+                          </tr>
+                          <tr>
+                            <td>Small Objects</td>
+                            <td>Difficulty detecting distant objects</td>
+                            <td>Feature pyramid network enhancements</td>
+                          </tr>
+                          <tr>
+                            <td>False Positives</td>
+                            <td>Misclassification of similar objects</td>
+                            <td>Hard negative mining during training</td>
+                          </tr>
+                          <tr>
+                            <td>Real-time Requirements</td>
+                            <td>Need for <30ms inference time</td>
+                            <td>Model compression + CUDA optimization</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    
+                    <div class="alert alert-warning mt-3">
+                      <i class="fas fa-exclamation-triangle me-2"></i>
+                      <strong>Ongoing Challenge:</strong> The model still struggles with extreme occlusion scenarios where less than 20% of the object is visible.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          
+          <!-- Conclusion & Future Work -->
+          <section id="conclusion" class="section">
+            <h2 class="section-title">Conclusion & Future Work</h2>
+            
+            <div class="card mb-4">
+              <div class="card-body">
+                <h5 class="card-title">Key Achievements</h5>
+                <ul class="list-group list-group-flush mb-4">
+                  <li class="list-group-item">
+                    <i class="fas fa-check-circle text-success me-2"></i>
+                    Developed a real-time object detection system for critical safety items
+                  </li>
+                  <li class="list-group-item">
+                    <i class="fas fa-check-circle text-success me-2"></i>
+                    Achieved 93.7% mAP@0.5 across all three target classes
+                  </li>
+                  <li class="list-group-item">
+                    <i class="fas fa-check-circle text-success me-2"></i>
+                    Optimized for hardware constraints with 24ms inference time
+                  </li>
+                  <li class="list-group-item">
+                    <i class="fas fa-check-circle text-success me-2"></i>
+                    Successfully bridged synthetic-to-real domain gap with advanced augmentation
+                  </li>
+                </ul>
+                
+                <h5>Future Work</h5>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <div class="card h-100">
+                      <div class="card-body">
+                        <h6 class="card-title">
+                          <i class="fas fa-expand-arrows-alt text-primary me-2"></i>Expanded Object Classes
+                        </h6>
+                        <p class="card-text small">
+                          Add detection capabilities for additional safety equipment such as medical kits, emergency hatches, and communication devices.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <div class="card h-100">
+                      <div class="card-body">
+                        <h6 class="card-title">
+                          <i class="fas fa-mobile-alt text-primary me-2"></i>Mobile Integration
+                        </h6>
+                        <p class="card-text small">
+                          Adapt the system for astronaut tablet devices and AR headsets for hands-free operation during emergencies.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <div class="card h-100">
+                      <div class="card-body">
+                        <h6 class="card-title">
+                          <i class="fas fa-route text-primary me-2"></i>Navigation Enhancement
+                        </h6>
+                        <p class="card-text small">
+                          Integrate with station mapping to not only detect safety equipment but also provide optimal routes to reach them.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <div class="card h-100">
+                      <div class="card-body">
+                        <h6 class="card-title">
+                          <i class="fas fa-microchip text-primary me-2"></i>Edge AI Optimization
+                        </h6>
+                        <p class="card-text small">
+                          Further optimize the model for deployment on dedicated edge AI hardware with TPU/NPU acceleration.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          
+          <!-- Downloads -->
+          <section id="download" class="section">
+            <h2 class="section-title">Downloads & Resources</h2>
+            
+            <div class="row">
+              <div class="col-lg-6 mb-4">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h5 class="card-title">Project Resources</h5>
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                          <div>
+                            <i class="fas fa-file-pdf text-danger me-2"></i>
+                            Technical Report
+                          </div>
+                          <a href="#" class="btn btn-sm pdf-btn">
+                            <i class="fas fa-download me-1"></i> PDF
+                          </a>
+                        </div>
+                      </li>
+                      <li class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                          <div>
+                            <i class="fab fa-github text-dark me-2"></i>
+                            Source Code
+                          </div>
+                          <a href="#" class="btn btn-sm github-btn">
+                            <i class="fas fa-code me-1"></i> GitHub
+                          </a>
+                        </div>
+                      </li>
+                      <li class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                          <div>
+                            <i class="fas fa-flask text-primary me-2"></i>
+                            Demo Application
+                          </div>
+                          <a href="#" class="btn btn-sm btn-primary">
+                            <i class="fas fa-rocket me-1"></i> Launch
+                          </a>
+                        </div>
+                      </li>
+                      <li class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                          <div>
+                            <i class="fas fa-cubes text-success me-2"></i>
+                            Pre-trained Model
+                          </div>
+                          <a href="#" class="btn btn-sm btn-success">
+                            <i class="fas fa-download me-1"></i> Download
+                          </a>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-lg-6 mb-4">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h5 class="card-title">Contact Information</h5>
+                    <div class="alert alert-light">
+                      <p>
+                        <i class="fas fa-users text-primary me-2"></i>
+                        <strong>Team BlackOps</strong>
+                      </p>
+                      <p class="small">
+                        A cross-disciplinary team specialized in AI solutions for space applications.
+                      </p>
+                    </div>
+                    
+                    <div class="mb-3">
+                      <label class="form-label">Project Lead</label>
+                      <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        <input type="text" class="form-control" value="Dr. Sarah Chen" readonly>
+                      </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                      <label class="form-label">Email</label>
+                      <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                        <input type="text" class="form-control" value="visionx@blackops.space" readonly>
+                      </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                      <label class="form-label">Institutional Affiliation</label>
+                      <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-university"></i></span>
+                        <input type="text" class="form-control" value="International Space University" readonly>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Footer -->
+  <footer class="py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <p class="mb-0">© 2025 Team BlackOps. All rights reserved.</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <p class="mb-0">VisionX v1.0 | Released: April 2025</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- Back to Top Button -->
+  <a href="#" class="back-to-top" id="backToTop">
+    <i class="fas fa-arrow-up"></i>
+  </a>
+  
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    // Back to Top Button
+    window.addEventListener('scroll', function() {
+      if (window.pageYOffset > 300) {
+        document.getElementById('backToTop').classList.add('show');
+      } else {
+        document.getElementById('backToTop').classList.remove('show');
+      }
+    });
+    
+    document.getElementById('backToTop').addEventListener('click', function(e) {
+      e.preventDefault();
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    });
+    
+    // Activate Bootstrap scrollspy
+    document.addEventListener('DOMContentLoaded', function() {
+      var scrollSpy = new bootstrap.ScrollSpy(document.body, {
+        target: '#navbar-example'
+      });
+      
+      // Add active class to sidebar links
+      const navLinks = document.querySelectorAll('.sidebar .nav-link');
+      
+      navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          navLinks.forEach(l => l.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+    });
+  </script>
+</body>
+</html>
