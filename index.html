@@ -265,6 +265,7 @@
       <a class="navbar-brand" href="#">
         VisionX <span class="text-primary">|</span> <small class="text-muted">Space Safety</small>
       </a>
+    </div>
   </nav>
 
   <div class="container-fluid">
@@ -396,7 +397,7 @@
                       <i class="fas fa-dumbbell"></i>
                     </div>
                     <h6>Training</h6>
-                    <small>5 Epochs</small>
+                    <small>100 Epochs</small>
                   </div>
                   <div class="flowchart-step">
                     <div class="flowchart-icon">
@@ -604,7 +605,7 @@
                           <li class="list-group-item">
                             <div class="d-flex justify-content-between">
                               <span><i class="fas fa-history text-primary me-2"></i> Epochs</span>
-                              <span class="badge-highlight">5</span>
+                              <span class="badge-highlight">100</span>
                             </div>
                           </li>
                           <li class="list-group-item">
@@ -633,7 +634,7 @@
                     <pre class="language-python"><code>!python -m ultralytics.yolo.v8.detect.train \
     model=yolov8s.pt \
     data=dataset.yaml \
-    epochs=5 \
+    epochs=100 \
     imgsz=640 \
     batch=16 \
     name=visionx_model \
@@ -667,9 +668,9 @@
                     </div>
                     
                     <div class="alert alert-light border-left-primary mb-3">
-                      <h6><i class="fas fa-lightbulb text-warning me-2"></i>Early Stopping</h6>
+                      <h6><i class="fas fa-lightbulb text-warning me-2"></i>Extended Training</h6>
                       <p class="small mb-0">
-                        Patience set to 2 epochs to prevent overfitting on the synthetic dataset.
+                        Increased to 100 epochs to maximize performance, achieving a peak mAP@0.5 of 0.95123.
                       </p>
                     </div>
                     
@@ -704,32 +705,32 @@
                   <div class="card-body">
                     <h5 class="card-title">Performance Breakdown</h5>
                     <p class="small">
-                      The model achieves excellent detection performance across all three safety-critical classes. The mAP@0.5 metric at 93.7% indicates high overall accuracy.
+                      The model achieves excellent detection performance across all three safety-critical classes. The mAP@0.5 metric at 95.1% indicates high overall accuracy.
                     </p>
                     
                     <div class="mt-4">
                       <div class="mb-3">
                         <h6>Fire Extinguisher</h6>
                         <div class="progress">
-                          <div class="progress-bar bg-danger" role="progressbar" style="width: 96%;" aria-valuenow="96" aria-valuemin="0" aria-valuemax="100">96%</div>
+                          <div class="progress-bar bg-danger" role="progressbar" style="width: 98%;" aria-valuenow="98" aria-valuemin="0" aria-valuemax="100">98%</div>
                         </div>
-                        <div class="small text-muted mt-1">Precision: 0.96 | Recall: 0.97</div>
+                        <div class="small text-muted mt-1">Precision: 0.98 | Recall: 0.91</div>
                       </div>
                       
                       <div class="mb-3">
                         <h6>Toolbox</h6>
                         <div class="progress">
-                          <div class="progress-bar bg-primary" role="progressbar" style="width: 92%;" aria-valuenow="92" aria-valuemin="0" aria-valuemax="100">92%</div>
+                          <div class="progress-bar bg-primary" role="progressbar" style="width: 97%;" aria-valuenow="97" aria-valuemin="0" aria-valuemax="100">97%</div>
                         </div>
-                        <div class="small text-muted mt-1">Precision: 0.92 | Recall: 0.93</div>
+                        <div class="small text-muted mt-1">Precision: 0.97 | Recall: 0.89</div>
                       </div>
                       
                       <div class="mb-3">
                         <h6>Oxygen Tank</h6>
                         <div class="progress">
-                          <div class="progress-bar bg-info" role="progressbar" style="width: 93%;" aria-valuenow="93" aria-valuemin="0" aria-valuemax="100">93%</div>
+                          <div class="progress-bar bg-info" role="progressbar" style="width: 98%;" aria-valuenow="98" aria-valuemin="0" aria-valuemax="100">98%</div>
                         </div>
-                        <div class="small text-muted mt-1">Precision: 0.93 | Recall: 0.94</div>
+                        <div class="small text-muted mt-1">Precision: 0.98 | Recall: 0.90</div>
                       </div>
                     </div>
                   </div>
@@ -759,19 +760,19 @@
                     <div class="row text-center my-4">
                       <div class="col-md-4">
                         <div class="metric-card">
-                          <div class="metric-value">24 ms</div>
+                          <div class="metric-value">21.5 ms</div>
                           <div class="metric-label">Average Inference Time</div>
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="metric-card">
-                          <div class="metric-value">0.88</div>
+                          <div class="metric-value">0.951</div>
                           <div class="metric-label">mAP@0.5</div>
                         </div>
                       </div>
                       <div class="col-md-4">
                         <div class="metric-card">
-                          <div class="metric-value">0.68</div>
+                          <div class="metric-value">0.816</div>
                           <div class="metric-label">mAP@0.5:0.95</div>
                         </div>
                       </div>
@@ -792,6 +793,7 @@
             <div class="card mb-4">
               <div class="card-body">
                 <h5 class="card-title">Detection Examples</h5>
+                <p class="small mb-3">All predictions are made with a confidence threshold greater than 0.5, ensuring high reliability in detection.</p>
                 <div id="sampleCarousel" class="carousel slide" data-bs-ride="carousel">
                   <div class="carousel-indicators">
                     <button type="button" data-bs-target="#sampleCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -883,6 +885,19 @@
                           </div>
                         </div>
                       </div>
+                      <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingFour">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                            Overfitting on Synthetic Data
+                          </button>
+                        </h2>
+                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#challengesAccordion">
+                          <div class="accordion-body">
+                            <p class="small">Extended training showed signs of overfitting, with validation losses fluctuating more than training losses.</p>
+                            <p class="small"><strong>Solution:</strong> Monitored validation metrics closely and used early stopping (patience=2) to mitigate overfitting risks.</p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -922,6 +937,11 @@
                             <td>Need for <30ms inference time</td>
                             <td>Model compression + CUDA optimization</td>
                           </tr>
+                          <tr>
+                            <td>Recall Variability</td>
+                            <td>Inconsistent detection of true positives</td>
+                            <td>Increased training duration to 100 epochs</td>
+                          </tr>
                         </tbody>
                       </table>
                     </div>
@@ -950,11 +970,11 @@
                   </li>
                   <li class="list-group-item">
                     <i class="fas fa-check-circle text-success me-2"></i>
-                    Achieved 93.7% mAP@0.5 across all three target classes
+                    Achieved 95.1% mAP@0.5 across all three target classes
                   </li>
                   <li class="list-group-item">
                     <i class="fas fa-check-circle text-success me-2"></i>
-                    Optimized for hardware constraints with 24ms inference time
+                    Optimized for hardware constraints with 21.5ms inference time
                   </li>
                   <li class="list-group-item">
                     <i class="fas fa-check-circle text-success me-2"></i>
@@ -1033,7 +1053,7 @@
                             <i class="fas fa-file-pdf text-danger me-2"></i>
                             Technical Report
                           </div>
-                          <a href="uploads/Report (1).pdf" target = "_blank" class="btn btn-sm pdf-btn">
+                          <a href="uploads/Report (1).pdf" target="_blank" class="btn btn-sm pdf-btn">
                             <i class="fas fa-download me-1"></i> PDF
                           </a>
                         </div>
@@ -1044,7 +1064,7 @@
                             <i class="fab fa-github text-dark me-2"></i>
                             Source Code
                           </div>
-                          <a href="https://github.com/nakul-verma2/visionx" target = "_blank" class="btn btn-sm github-btn">
+                          <a href="https://github.com/nakul-verma2/visionx" target="_blank" class="btn btn-sm github-btn">
                             <i class="fas fa-code me-1"></i> GitHub
                           </a>
                         </div>
@@ -1066,7 +1086,7 @@
                             <i class="fas fa-cubes text-success me-2"></i>
                             Pre-trained Model
                           </div>
-                          <a href="uploads/best.pt" target = "_blank" class="btn btn-sm btn-success">
+                          <a href="uploads/best.pt" target="_blank" class="btn btn-sm btn-success">
                             <i class="fas fa-download me-1"></i> Download
                           </a>
                         </div>
