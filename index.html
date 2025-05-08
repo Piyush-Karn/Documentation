@@ -632,19 +632,37 @@
                     
                     <h6 class="mt-4">Training Command</h6>
                     <pre class="language-python"><code>!python -m ultralytics.yolo.v8.detect.train \
-    model=yolov8s.pt \
-    data=dataset.yaml \
-    epochs=100 \
-    imgsz=640 \
-    batch=16 \
-    name=visionx_model \
-    patience=2 \
-    mosaic=0.5 \
-    lr0=0.001 \
-    lrf=0.01 \
-    momentum=0.2 \
-    warmup_epochs=1 \
-    val=True</code></pre>
+    data="/content/HackByte_Dataset/data.yaml",
+    epochs=100,
+    imgsz=640,
+    batch=16,
+    device=0,
+    pretrained=True,
+    resume=False,
+    optimizer="SGD",
+    cos_lr=True,
+    workers=4,
+    lr0=0.005,
+    lrf=0.01,
+    momentum=0.937,
+    weight_decay=0.0005,
+    warmup_epochs=3.0,
+    warmup_momentum=0.8,
+    warmup_bias_lr=0.1,
+    box=0.05,
+    cls=0.5,
+    dfl=1.5,
+    hsv_h=0.015,
+    hsv_s=0.7,
+    hsv_v=0.4,
+    degrees=10.0,
+    translate=0.1,
+    scale=0.5,
+    shear=2.0,
+    flipud=0.5,
+    fliplr=0.5,
+    mosaic=1.0,
+    mixup=0.2</code></pre>
                   </div>
                 </div>
               </div>
